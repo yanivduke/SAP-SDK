@@ -8,7 +8,7 @@
 
 This article includes a basic knowledge about **S**AP **D**evelopment **K**it (SDK).
 
-[SAP](https://en.wikipedia.org/wiki/SAP_Business_One) software is an ERP that provides several modules which handle different business processes.
+[SAP](https://en.wikipedia.org/wiki/SAP_Business_One) software is an [ERP](https://en.wikipedia.org/wiki/Enterprise_resource_planning) that provides several modules which handle different business processes.
 
 The SDK allows software customizations and integration in a safe, complete and organized environment, as opposed to writing direct SQL statements to SQL Server&#39;s SAP database.
 
