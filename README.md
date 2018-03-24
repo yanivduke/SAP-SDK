@@ -52,9 +52,21 @@ A code example for company&#39;s database connection.
 
 **C#**
 
-'''csharp
-int res = 0;string strret = &quot;&quot;;SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst\_MSSQL2008;oCompany.Server = &quot;127.0.0.1&quot;; //ip or server name for the SQL Server oCompany.UseTrusted = false; oCompany.CompanyDB = &quot;db\_name&quot;;oCompany.UserName = &quot;SomeUser&quot;;oCompany.Password = &quot;\*\*\*\*\*\*\*\*&quot;; oCompany.Connect();oCompany.GetLastError(out res, out strret);strret = oCompany.GetLastErrorDescription();MessageBox.Show(strret);  
-'''
+```csharp
+int res = 0;
+string strret = "";
+SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();
+oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_MSSQL2008;
+oCompany.Server = "127.0.0.1"; //ip or server name for the SQL Server 
+oCompany.UseTrusted = false; 
+oCompany.CompanyDB = "db_name";
+oCompany.UserName = "SomeUser";
+oCompany.Password = "******"; 
+oCompany.Connect();
+oCompany.GetLastError(out res, out strret);
+strret = oCompany.GetLastErrorDescription();
+MessageBox.Show(strret);  
+```
 
 
 
@@ -63,15 +75,45 @@ After connecting the company&#39;s DB other actions can be done, for example add
 **C#**
 
 ```csharp
-SAPbobsCOM.Documents oDoc = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);SAPbobsCOM.Document\_Lines oLines = oDoc.Lines; oDoc.CardCode = &quot;12341234&quot;;oDoc.DocDate = DateTime.Now;oDoc.DocDueDate = DateTime.Now.AddDays(10); oLines.ItemCode = &quot;ABC12345&quot;;oLines.Price = 100; oLines.Add();oLines.ItemCode = &quot;ABCD4321&quot;;oLines.Price = 120; int res = oDoc.Add(); if (res != 0){    MessageBox.Show(oCompany.GetLastErrorDescription());}else{    MessageBox.Show(oCompany.GetNewObjectKey()); //@scope\_identity}  
+SAPbobsCOM.Documents oDoc = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
+SAPbobsCOM.Document\_Lines oLines = oDoc.Lines;
+oDoc.CardCode = &quot;12341234&quot;;
+oDoc.DocDate = DateTime.Now;oDoc.DocDueDate = DateTime.Now.AddDays(10);
+oLines.ItemCode = &quot;ABC12345&quot;;
+oLines.Price = 100;
+oLines.Add();
+oLines.ItemCode = &quot;ABCD4321&quot;;
+oLines.Price = 120;
+int res = oDoc.Add();
+if (res != 0)
+{
+  MessageBox.Show(oCompany.GetLastErrorDescription());
+}
+else
+{   
+  MessageBox.Show(oCompany.GetNewObjectKey()); //@scope_identity
+}  
 ```
 
 For updating an exist order document,  DocEntry must be fetched first by SQL query or other method.
 
 **C#**
 
-|  SAPbobsCOM.Documents oDocToUpdate = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);SAPbobsCOM.Document\_Lines oLinesToUpdate = oDocToUpdate.Lines; int DocEntry = 217022334; if(oDocToUpdate.GetByKey(DocEntry)){    oLinesToUpdate.SetCurrentLine(1);    oLinesToUpdate.Price = 50;     oLinesToUpdate.Add();    oLinesToUpdate.SetCurrentLine(2);     oLinesToUpdate.ItemCode = &quot;-&quot;;    oLinesToUpdate.Price = 100;     res = oDocToUpdate.Update();} |
-| --- |
+```csharp
+SAPbobsCOM.Documents oDocToUpdate = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
+SAPbobsCOM.Document_Lines oLinesToUpdate = oDocToUpdate.Lines;
+int DocEntry = 217022334;
+if(oDocToUpdate.GetByKey(DocEntry))
+{    
+  oLinesToUpdate.SetCurrentLine(1);
+  oLinesToUpdate.Price = 50;
+  oLinesToUpdate.Add();
+  oLinesToUpdate.SetCurrentLine(2);
+  oLinesToUpdate.ItemCode = "46hu4u64hu";    
+  oLinesToUpdate.Price = 100;     
+  res = oDocToUpdate.Update();
+} 
+```
 
 
 
