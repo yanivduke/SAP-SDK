@@ -50,9 +50,7 @@ In some cases, the project must be configured as 64bit in order to be compiled s
 #  Objects update model
 
 A code example for company&#39;s database connection.
-
 **C#**
-
 ```csharp
 int res = 0;
 string strret = "";
@@ -72,9 +70,7 @@ MessageBox.Show(strret);
 
 
 After connecting the company&#39;s DB other actions can be done, for example, add a new order document.
-
 **C#**
-
 ```csharp
 SAPbobsCOM.Documents oDoc = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
 SAPbobsCOM.Document_Lines oLines = oDoc.Lines;
@@ -97,9 +93,7 @@ else
 ```
 
 For updating an existing order document,  DocEntry must be fetched first by SQL query or another method.
-
 **C#**
-
 ```csharp
 SAPbobsCOM.Documents oDocToUpdate = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
 SAPbobsCOM.Document_Lines oLinesToUpdate = oDocToUpdate.Lines;
