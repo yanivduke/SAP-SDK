@@ -45,6 +45,7 @@ After installation, the Di DLL can be added to the .NET project.
 ![Di API DLL Added to the solution](explorer2.png "Di API DLL Added to the solution")
 
 In some cases, the project must be configured as 64bit in order to be compiled successfully.
+
 ![Platform target x64](build3.png "Platform target x64")
 
 
@@ -136,7 +137,9 @@ System.IO.File.WriteAllText(@"C:\TEMP\bp.xml", xmlSchema);
 XML Converting
 **C#**
 ```csharp
-SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);oBP.GetByKey(&quot;12186938&quot;);System.IO.File.WriteAllText(&quot;C:\\TEMP\\bp.xml&quot;, oBP.GetAsXML());  |
+SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
+oBP.GetByKey("12186938");
+System.IO.File.WriteAllText("C:\\TEMP\\bp.xml", oBP.GetAsXML());
 ```
 
 Adding XML
@@ -146,7 +149,7 @@ int count = oCompany.GetXMLelementCount("C:\\TEMP\\bp.xml");
 for(int i=0; i < count; i++)
 {     
 	SAPbobsCOM.BoObjectTypes type = oCompany.GetXMLobjectType("C:\\TEMP\\bp.xml", i);
-	oBP = oCompany.GetBusinessObjectFromXML(";C:\\TEMP\\bp.xml", i);
+	oBP = oCompany.GetBusinessObjectFromXML("C:\\TEMP\\bp.xml", i);
 	res = oBP.Add();
 } 
 ```
