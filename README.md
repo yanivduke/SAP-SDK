@@ -12,7 +12,7 @@ This article includes a basic knowledge about **S** AP **D** evelopment **K** it
 
 The SDK allows software customizations and integration in a safe, complete and organize environment, as opposed to writing direct SQL statements to SQL Server&#39;s SAP database.
 
-SAP works with many databases - the key ones are DB2, MS SQL, Oracle and HANA.
+SAP business one ERP software works with many databases - the key ones are DB2, MS SQL, Oracle and HANA.
 
 It is possible to read data directly from database, but it is **forbidden** to add new data or change data (write operation) directly to database because of the following reasons:
 
@@ -20,35 +20,31 @@ It is possible to read data directly from database, but it is **forbidden** to a
 - Data integrity – depended data won&#39;t be update.
 - Performance – update deadlocks and other performance problem caused by writing data without que or buffer.
 
+
 # principles
 
 In order to use the SB1 SDK properly it is important to understand some basic principles:
 
-Data integrity – update via SB1 SDK force the same validation as the SAP client admin, so you cannot change prices on closed status document or add document without all mandatory fields.
+Data integrity – update via SB1 SDK force the same validation as the SAP client application, so you cannot change prices on closed status document or add document without fill-in all mandatory fields, and more other validation rules that happend on application screen like values range and type.
 
-Document identity is not DocNum but DocEntry.
+Document identity is not DocNum but DocEntry!
 
 The SDK includes two main part Di API – for data manipulations, and Ui API – for user interface modifications.
 
 This article focused on the Di API.
 
 
-
 # installation
 
 The SDK can be found on the SB1 client installation pack, under **Packages\SDK**.
-
-לאחר ההתקנה אפשר להוסיף לפרויקטים מבוססי .NET את ה DLLים של ה SDK.
+After installation the Di DLL can be added to the .NET project.
 ![Adding Reference](reference1.png "Adding Reference")
-Adding Reference
 
 ![Di API DLL Added to solution](explorer2.png "Di API DLL Added to solution")
-Di API DLL Added to solution
 
 In some cases, the project must be configured as 64bit in order to be compile successfully.
-
 ![Platform target x64](build3.png "Platform target x64")
-Platform target x64
+
 
 #  Objects update model
 
@@ -56,8 +52,9 @@ A code example for company&#39;s database connection.
 
 **C#**
 
-|  int res = 0;string strret = &quot;&quot;;SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst\_MSSQL2008;oCompany.Server = &quot;127.0.0.1&quot;; //ip or server name for the SQL Server oCompany.UseTrusted = false; oCompany.CompanyDB = &quot;db\_name&quot;;oCompany.UserName = &quot;SomeUser&quot;;oCompany.Password = &quot;\*\*\*\*\*\*\*\*&quot;; oCompany.Connect();oCompany.GetLastError(out res, out strret);strret = oCompany.GetLastErrorDescription();MessageBox.Show(strret);  |
-| --- |
+'''C#
+int res = 0;string strret = &quot;&quot;;SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst\_MSSQL2008;oCompany.Server = &quot;127.0.0.1&quot;; //ip or server name for the SQL Server oCompany.UseTrusted = false; oCompany.CompanyDB = &quot;db\_name&quot;;oCompany.UserName = &quot;SomeUser&quot;;oCompany.Password = &quot;\*\*\*\*\*\*\*\*&quot;; oCompany.Connect();oCompany.GetLastError(out res, out strret);strret = oCompany.GetLastErrorDescription();MessageBox.Show(strret);  |
+'''
 
 
 
