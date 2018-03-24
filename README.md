@@ -79,13 +79,13 @@ After connecting the company&#39;s DB other actions can be done, for example, ad
 
 ```csharp
 SAPbobsCOM.Documents oDoc = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
-SAPbobsCOM.Document\_Lines oLines = oDoc.Lines;
-oDoc.CardCode = &quot;12341234&quot;;
+SAPbobsCOM.Document_Lines oLines = oDoc.Lines;
+oDoc.CardCode = "12341234";
 oDoc.DocDate = DateTime.Now;oDoc.DocDueDate = DateTime.Now.AddDays(10);
-oLines.ItemCode = &quot;ABC12345&quot;;
+oLines.ItemCode = "ABC12345";
 oLines.Price = 100;
 oLines.Add();
-oLines.ItemCode = &quot;ABCD4321&quot;;
+oLines.ItemCode = "ABCD4321";
 oLines.Price = 120;
 int res = oDoc.Add();
 if (res != 0)
@@ -112,7 +112,7 @@ if(oDocToUpdate.GetByKey(DocEntry))
   oLinesToUpdate.Price = 50;
   oLinesToUpdate.Add();
   oLinesToUpdate.SetCurrentLine(2);
-  oLinesToUpdate.ItemCode = "46hu4u64hu";    
+  oLinesToUpdate.ItemCode = "ABCD4321";    
   oLinesToUpdate.Price = 100;     
   res = oDocToUpdate.Update();
 } 
@@ -134,7 +134,7 @@ string xmlSchema = oCompany.GetBusinessObjectXmlSchema(SAPbobsCOM.BoObjectTypes.
 System.IO.File.WriteAllText(@"C:\TEMP\bp.xml", xmlSchema); 
 ```
 
-XML Converting
+Converting Object to XML 
 **C#**
 ```csharp
 SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
@@ -142,14 +142,16 @@ oBP.GetByKey("12186938");
 System.IO.File.WriteAllText("C:\\TEMP\\bp.xml", oBP.GetAsXML());
 ```
 
-Adding XML
+Loading XML to an Object and adding the new Object
 **C#**
 ```csharp
 int count = oCompany.GetXMLelementCount("C:\\TEMP\\bp.xml");
 for(int i=0; i < count; i++)
 {     
-	SAPbobsCOM.BoObjectTypes type = oCompany.GetXMLobjectType("C:\\TEMP\\bp.xml", i);
-	oBP = oCompany.GetBusinessObjectFromXML("C:\\TEMP\\bp.xml", i);
-	res = oBP.Add();
+  SAPbobsCOM.BoObjectTypes type = oCompany.GetXMLobjectType("C:\\TEMP\\bp.xml", i);
+  oBP = oCompany.GetBusinessObjectFromXML("C:\\TEMP\\bp.xml", i);
+  res = oBP.Add();
 } 
 ```
+
+
