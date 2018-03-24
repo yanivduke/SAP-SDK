@@ -1,10 +1,8 @@
-#
 # SAP Development
 
-#
 ## SAP business one (SB1) SDK integration
 
-# introduction
+# Introduction
 
 This article includes a basic knowledge about **S**AP **D**evelopment **K**it (SDK).
 
@@ -21,7 +19,7 @@ It is possible to read data directly from the database, but it is **forbidden** 
 - Performance – update deadlocks and other performance problem caused by writing data without queue or buffer.
 
 
-# principles
+# Principles
 
 In order to use the SB1 SDK properly it is important to understand some basic principles:
 
@@ -34,7 +32,7 @@ The SDK includes two main part Di API – for data manipulations, and Ui API –
 This article focused on the Di API.
 
 
-# installation
+# Installation
 
 The SDK can be found on the SB1 client installation pack, under **Packages\SDK**.
 
