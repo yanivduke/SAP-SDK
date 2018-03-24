@@ -6,26 +6,26 @@
 
 # introduction
 
-This article includes a basic knowledge about **S** AP **D** evelopment **K** it (SDK).
+This article includes a basic knowledge about **S**AP **D**evelopment **K**it (SDK).
 
-[SAP](https://en.wikipedia.org/wiki/SAP_Business_One) software is an ERP that provides several modules which handles different business processes.
+[SAP](https://en.wikipedia.org/wiki/SAP_Business_One) software is an ERP that provides several modules which handle different business processes.
 
-The SDK allows software customizations and integration in a safe, complete and organize environment, as opposed to writing direct SQL statements to SQL Server&#39;s SAP database.
+The SDK allows software customizations and integration in a safe, complete and organized environment, as opposed to writing direct SQL statements to SQL Server&#39;s SAP database.
 
-SAP business one ERP software works with many databases - the key ones are DB2, MS SQL, Oracle and HANA.
+The SAP business one ERP software works with many databases - the key ones are DB2, MS SQL, Oracle, and HANA.
 
-It is possible to read data directly from database, but it is **forbidden** to add new data or change data (write operation) directly to database because of the following reasons:
+It is possible to read data directly from the database, but it is **forbidden** to add new data or change data (write operation) directly to the database because of the following reasons:
 
-- SAP warranty – SAP wont supports damages caused by direct change of SAP data.
-- Data integrity – depended data won&#39;t be update.
-- Performance – update deadlocks and other performance problem caused by writing data without que or buffer.
+- SAP warranty – SAP won&#39;t supports damages caused by a direct change of SAP data.
+- Data integrity – depended on data won&#39;t be updated.
+- Performance – update deadlocks and other performance problem caused by writing data without queue or buffer.
 
 
 # principles
 
 In order to use the SB1 SDK properly it is important to understand some basic principles:
 
-Data integrity – update via SB1 SDK force the same validation as the SAP client application, so you cannot change prices on closed status document or add document without fill-in all mandatory fields, and more other validation rules that happend on application screen like values range and type.
+Data integrity – update via SB1 SDK force the same validation as the SAP client application, so you cannot change prices on a closed status document or add document without fill-in all mandatory fields, and more other validation rules that happen on application screen like values range and type.
 
 Document identity is not DocNum but DocEntry!
 
@@ -38,13 +38,13 @@ This article focused on the Di API.
 
 The SDK can be found on the SB1 client installation pack, under **Packages\SDK**.
 
-After installation the Di DLL can be added to the .NET project.
+After installation, the Di DLL can be added to the .NET project.
 
 ![Adding Reference](reference1.png "Adding Reference")
 
-![Di API DLL Added to solution](explorer2.png "Di API DLL Added to solution")
+![Di API DLL Added to the solution](explorer2.png "Di API DLL Added to the solution")
 
-In some cases, the project must be configured as 64bit in order to be compile successfully.
+In some cases, the project must be configured as 64bit in order to be compiled successfully.
 ![Platform target x64](build3.png "Platform target x64")
 
 
@@ -72,7 +72,7 @@ MessageBox.Show(strret);
 
 
 
-After connecting the company&#39;s DB other actions can be done, for example add a new order document.
+After connecting the company&#39;s DB other actions can be done, for example, add a new order document.
 
 **C#**
 
@@ -97,7 +97,7 @@ else
 }  
 ```
 
-For updating an exist order document,  DocEntry must be fetched first by SQL query or other method.
+For updating an existing order document,  DocEntry must be fetched first by SQL query or another method.
 
 **C#**
 
@@ -119,33 +119,34 @@ if(oDocToUpdate.GetByKey(DocEntry))
 
 
 
+# XML update model
+There is another way, for adding or updating SAP Documents - by sending XML structures.
+This technique is quicker - run faster, and more important, it open new XML manipulation options for a more generic mechanism.
+Using this method for insert new documents is very easy, thou update an existing document is much more complex.
 
-
-# xml update model
-
-קיימת דרך נוספת לבצע הוספה ועדכון למסמכים – ע&quot;י שליחת XML, בצורה זו אפשר לפתח מנגנון כללי יותר לצורך תמיכה ביותר מסוג אובייקט אחד, ובנוסף המנגנון פועל קצת יותר מהר.
-
-מומלץ מאוד להוספה, אך עלול לעשות בעיות בעדכון – שדות שלא יוזנו ל XML המעדכן ידרסו בערך ריק.
-
-ע&quot;י קבלת הסכימה ניתן לבצע מניפולציות על קוד ה XML של הרבה סוגי אובייקטים.
-
-קבלת סכמה
-
+Receiving the schema
 **C#**
+```csharp
+oCompany.XmlExportType = SAPbobsCOM.BoXmlExportTypes.xet_ExportImportMode;
+oCompany.XMLAsString = false;
+string xmlSchema = oCompany.GetBusinessObjectXmlSchema(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
+System.IO.File.WriteAllText(@"C:\TEMP\bp.xml", xmlSchema); 
+```
 
-|  oCompany.XmlExportType = SAPbobsCOM.BoXmlExportTypes.xet\_ExportImportMode;oCompany.XMLAsString = false; string xmlSchema = oCompany.GetBusinessObjectXmlSchema(SAPbobsCOM.BoObjectTypes.oBusinessPartners);System.IO.File.WriteAllText(@&quot;C:\TEMP\bp.xml&quot;, xmlSchema);  |
-| --- |
-
-המרה ל XML
-
+XML Converting
 **C#**
+```csharp
+SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);oBP.GetByKey(&quot;12186938&quot;);System.IO.File.WriteAllText(&quot;C:\\TEMP\\bp.xml&quot;, oBP.GetAsXML());  |
+```
 
-|  SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);oBP.GetByKey(&quot;12186938&quot;);System.IO.File.WriteAllText(&quot;C:\\TEMP\\bp.xml&quot;, oBP.GetAsXML());  |
-| --- |
-
-הוספה ל XML
-
+Adding XML
 **C#**
-
-|  int count = oCompany.GetXMLelementCount(&quot;C:\\TEMP\\bp.xml&quot;);for(int i=0; i &lt; count; i++){     SAPbobsCOM.BoObjectTypes type = oCompany.GetXMLobjectType(&quot;C:\\TEMP\\bp.xml&quot;, i);     oBP = oCompany.GetBusinessObjectFromXML(&quot;C:\\TEMP\\bp.xml&quot;, i);     res = oBP.Add();} |
-| --- |
+```csharp
+int count = oCompany.GetXMLelementCount("C:\\TEMP\\bp.xml");
+for(int i=0; i < count; i++)
+{     
+	SAPbobsCOM.BoObjectTypes type = oCompany.GetXMLobjectType("C:\\TEMP\\bp.xml", i);
+	oBP = oCompany.GetBusinessObjectFromXML(";C:\\TEMP\\bp.xml", i);
+	res = oBP.Add();
+} 
+```
