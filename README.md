@@ -37,7 +37,9 @@ This article focused on the Di API.
 # installation
 
 The SDK can be found on the SB1 client installation pack, under **Packages\SDK**.
+
 After installation the Di DLL can be added to the .NET project.
+
 ![Adding Reference](reference1.png "Adding Reference")
 
 ![Di API DLL Added to solution](explorer2.png "Di API DLL Added to solution")
