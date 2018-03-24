@@ -50,7 +50,7 @@ In some cases, the project must be configured as 64bit in order to be compiled s
 #  Objects update model
 
 A code example for company&#39;s database connection.
-
+ 
 **C#**
 ```csharp
 int res = 0;
@@ -71,7 +71,7 @@ MessageBox.Show(strret);
 
 
 After connecting the company&#39;s DB other actions can be done, for example, add a new order document.
-
+ 
 **C#**
 ```csharp
 SAPbobsCOM.Documents oDoc = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
@@ -95,7 +95,7 @@ else
 ```
 
 For updating an existing order document,  DocEntry must be fetched first by SQL query or another method.
-
+ 
 **C#**
 ```csharp
 SAPbobsCOM.Documents oDocToUpdate = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
@@ -121,7 +121,7 @@ This technique is quicker - run faster, and more important, it open new XML mani
 Using this method for insert new documents is very easy, thou update an existing document is much more complex.
 
 Receiving the schema.
-
+ 
 **C#**
 ```csharp
 oCompany.XmlExportType = SAPbobsCOM.BoXmlExportTypes.xet_ExportImportMode;
@@ -131,7 +131,7 @@ System.IO.File.WriteAllText(@"C:\TEMP\bp.xml", xmlSchema);
 ```
 
 Converting Object to XML.
-
+ 
 **C#**
 ```csharp
 SAPbobsCOM.BusinessPartners oBP = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
@@ -140,7 +140,7 @@ System.IO.File.WriteAllText("C:\\TEMP\\bp.xml", oBP.GetAsXML());
 ```
 
 Loading XML to an Object and adding the new Object.
-
+ 
 **C#**
 ```csharp
 int count = oCompany.GetXMLelementCount("C:\\TEMP\\bp.xml");
